@@ -16,12 +16,12 @@
             @csrf
             <div class="flex flex-col mb-4">
               <x-input-label for="tweet" :value="__('Tweet')" />
-              <x-text-input id="tweet" class="block mt-1 w-full" type="text" name="tweet" :value="old('tweet')" required autofocus />
+              <x-text-input id="tweet" class="block mt-1 w-full" type="text" name="tweet" :value="old('tweet')" autofocus />
               <x-input-error :messages="$errors->get('tweet')" class="mt-2" />
             </div>
             <div class="flex flex-col mb-4">
               <x-input-label for="description" :value="__('Description')" />
-              <x-text-input id="description" class="block mt-1 w-full" type="text" name="description" :value="old('description')" required autofocus />
+              <x-text-input id="description" class="block mt-1 w-full" type="text" name="description" :value="old('description')" autofocus />
               <x-input-error :messages="$errors->get('description')" class="mt-2" />
             </div>
             <div class="flex items-center justify-end mt-4">
