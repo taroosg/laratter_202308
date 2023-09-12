@@ -2,9 +2,11 @@
 
 <x-app-layout>
   <x-slot name="header">
-    <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+
+    <h2 class="font-semibold text-xl text-gray-800 leading-tight dark:text-gray-200">
       {{ __('Tweet Index') }}
     </h2>
+
   </x-slot>
 
   <div class="py-12">
@@ -24,6 +26,7 @@
                   <a href="{{ route('tweet.show',$tweet->id) }}">
                     <h3 class="text-left font-bold text-lg text-gray-dark dark:text-gray-200">{{$tweet->tweet}}</h3>
                   </a>
+                  @if ($tweet->user_id === Auth::user()->id)
                   <div class="flex">
                     <!-- 更新ボタン -->
                     <form action="{{ route('tweet.edit',$tweet->id) }}" method="GET" class="text-left">
@@ -45,6 +48,7 @@
                       </x-primary-button>
                     </form>
                   </div>
+                  @endif
                 </td>
               </tr>
               @endforeach

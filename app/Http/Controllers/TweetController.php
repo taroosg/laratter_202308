@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Validator;
 use App\Models\Tweet;
+use App\Models\User;
 use Auth;
 
 class TweetController extends Controller
@@ -92,5 +93,16 @@ class TweetController extends Controller
   {
     $tweet = Tweet::find($id)->delete();
     return redirect()->route('tweet.index');
+  }
+
+  public function mydata()
+  {
+    // Userモデルに定義したリレーションを使用してデータを取得する．
+    $tweets = User::query()
+      ->find(Auth::user()->id)
+      ->userTweets()
+      ->orderBy('created_at', 'desc')
+      ->get();
+    return response()->view('tweet.index', compact('tweets'));
   }
 }
