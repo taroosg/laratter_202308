@@ -16,6 +16,7 @@ use App\Http\Controllers\TweetController;
 */
 
 Route::middleware('auth')->group(function () {
+  Route::get('/tweet/mypage', [TweetController::class, 'mydata'])->name('tweet.mypage');
   Route::resource('tweet', TweetController::class);
 });
 

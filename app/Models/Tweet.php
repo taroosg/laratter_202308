@@ -16,6 +16,18 @@ class Tweet extends Model
     'updated_at',
   ];
 
+  public function user()
+  {
+    return $this->belongsTo(User::class);
+  }
+
+  public function users()
+  {
+    return $this->belongsToMany(User::class)->withTimestamps();
+  }
+
+
+
   // 更新日順に全件データをとる関数
   public static function getAllOrderByUpdated_at()
   {
