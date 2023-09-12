@@ -4,7 +4,11 @@
   <x-slot name="header">
 
     <h2 class="font-semibold text-xl text-gray-800 leading-tight dark:text-gray-200">
+      @if(Request::routeIs('tweet.mypage'))
+      {{ __('Mypage') }}
+      @else
       {{ __('Tweet Index') }}
+      @endif
     </h2>
 
   </x-slot>
@@ -24,6 +28,7 @@
               <tr class="hover:bg-gray-lighter">
                 <td class="py-4 px-6 border-b border-gray-light dark:border-gray-600">
                   <a href="{{ route('tweet.show',$tweet->id) }}">
+                    <p class="text-left text-gray-800 dark:text-gray-200">{{$tweet->user->name}}</p>
                     <h3 class="text-left font-bold text-lg text-gray-dark dark:text-gray-200">{{$tweet->tweet}}</h3>
                   </a>
                   @if ($tweet->user_id === Auth::user()->id)
