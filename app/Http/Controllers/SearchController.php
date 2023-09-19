@@ -3,17 +3,26 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Tweet;
 use App\Models\User;
-use Auth;
 
-class FollowController extends Controller
+class SearchController extends Controller
 {
   /**
    * Display a listing of the resource.
    */
-  public function index()
+  public function index(Request $request)
   {
-    //
+    $keyword = trim($request->keyword);
+
+    $users  = User::where('name', 'like', "%{$keyword}%")->pluck('id')->all();
+
+    $tweets = Tweet::query()
+      ->where('tweet', 'like', "%{$keyword}%")
+      ->orWhere('description', 'like', "%{$keyword}%")
+      ->orWhereIn('user_id', $users)
+      ->get();
+    return response()->view('tweet.index', compact('tweets'));
   }
 
   /**
@@ -21,16 +30,15 @@ class FollowController extends Controller
    */
   public function create()
   {
-    //
+    return response()->view('search.input');
   }
 
   /**
    * Store a newly created resource in storage.
    */
-  public function store(User $user)
+  public function store(Request $request)
   {
-    Auth::user()->followings()->attach($user->id);
-    return redirect()->back();
+    //
   }
 
   /**
@@ -38,11 +46,7 @@ class FollowController extends Controller
    */
   public function show(string $id)
   {
-    $user = User::find($id);
-    $followers = $user->followers;
-    $followings = $user->followings;
-
-    return response()->view('user.show', compact('user', 'followers', 'followings'));
+    //
   }
 
   /**
@@ -64,9 +68,8 @@ class FollowController extends Controller
   /**
    * Remove the specified resource from storage.
    */
-  public function destroy(User $user)
+  public function destroy(string $id)
   {
-    Auth::user()->followings()->detach($user->id);
-    return redirect()->back();
+    //
   }
 }
